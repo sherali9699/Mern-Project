@@ -1,0 +1,13 @@
+/* for small screen */
+@media (max-width:576px){
+
+    /* home-about-sec */
+    .home-about-images{
+        flex-direction: column;
+        justify-content: space-between; /* Adjusts spacing between items */
+        align-items: center; /* Aligns items vertically */
+    }
+
+}
+
+

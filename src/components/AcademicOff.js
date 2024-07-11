@@ -119,21 +119,57 @@ function Teachers() {
           <h2 style={{ marginBottom: "4rem" }}>Teaching Community</h2>
         </div>
         <div className="home-about-images ">
-          <div className="home-about-image">
-            <img src={im1} alt="image" className="img-fluid teacher-pic" />
+        <div class="parent-card-pic">
+            <div class="child-card-pic">
+              <div class="character-pic">
+                <img
+                  src={im1}
+                  alt="Ustaad Shahid Hamid"
+                  class="image-fluid"
+                />
+              </div>
+              <div class="global-overlay">
+                <h5>Yosuf Kerai, M.A.T</h5>
+                <p>
+                  Associate Professor of Practice, Comparative
+                  Humanities
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="home-about-image">
-            <img src={im2} alt="image" className="img-fluid teacher-pic" />
+          <div class="parent-card-pic">
+            <div class="child-card-pic">
+              <div class="character-pic">
+                <img
+                  src={im2}
+                  alt="Ustaad Shahid Hamid"
+                  class="image-fluid"
+                />
+              </div>
+              <div class="global-overlay">
+                <h5>Aaron Molvany, PH.D.</h5>
+                <p>
+                  Associate Professor, Social Development and Policy
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="teacher-pic-container">
-            <img
-              src={im3}
-              alt="Ustad Shahid Hamid"
-              class="teacher-pic image-fluid"
-            />
-            <div class="overlay">
-              <h5>Ustaad Shahid Hamid.</h5>
-              <p>Visiting Associate Professor of Practice, Comparative Humanaties</p>
+          <div class="parent-card-pic">
+            <div class="child-card-pic">
+              <div class="character-pic">
+                <img
+                  src={im3}
+                  alt="Ustaad Shahid Hamid"
+                  class="image-fluid"
+                />
+              </div>
+              <div class="global-overlay">
+                <h5>Ustaad Shahid Hamid.</h5>
+                <p>
+                  Visiting Associate Professor of Practice, Comparative
+                  Humanities
+                </p>
+              </div>
             </div>
           </div>
         </div>

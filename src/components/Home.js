@@ -1,10 +1,21 @@
-import React from "react";
+import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlay,
+  faPause,
+  faVolumeMute,
+  faVolumeUp,
+} from "@fortawesome/free-solid-svg-icons";
 
 // for slider
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-// import './CardSlider.css'; // Your custom CSS for additional styling
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+//for video
+import videoThumbnail from "../videos/video-thumbnail.png"; // Poster image
+import sampleVideo from "../videos/music-video.mp4"; // Video file
 
 //importing componenets
 import Navbar from "./Navbar";
@@ -21,6 +32,9 @@ import home_about08 from "../images/home/home about06.png";
 import sl1 from "../images/home/Rectangle 5.png";
 import sl2 from "../images/home/events Card02.png";
 import sl3 from "../images/home/events Card03.png";
+//for academic off
+import pic1 from '../images/Academic_off/m2.png';
+import pic2 from '../images/Academic_off/m1.png';
 
 function Home() {
   return (
@@ -37,13 +51,66 @@ function Home() {
 }
 
 function First_sec() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+      if (isMuted) {
+        videoRef.current.muted = true;
+      }
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = () => {
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  useEffect(() => {
+    const handleVideoEnd = () => {
+      console.log("Video ended");
+      setIsPlaying(true);
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+      console.log("Video paused and currentTime reset");
+    };
+
+    const videoElement = videoRef.current;
+    videoElement.addEventListener("ended", handleVideoEnd);
+
+    return () => {
+      videoElement.removeEventListener("ended", handleVideoEnd);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("isPlaying:", isPlaying);
+    console.log("isMuted:", isMuted);
+  }, [isPlaying, isMuted]);
+
   return (
     <div className="global-sec">
-      <div className="container-fluid">
-        <div className="home-video-sec">{/* */}</div>
-        <div className="vid-cont-btn">
-          <span></span>
-          <span></span>
+      <div className="video-container">
+        <video
+          ref={videoRef}
+          src={sampleVideo}
+          poster={videoThumbnail}
+          controls={false}
+          muted={isMuted}
+        />
+        <div className="controls">
+          <button onClick={togglePlayPause}>
+            <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+          </button>
+          <button onClick={toggleMute}>
+            <FontAwesomeIcon icon={isMuted ? faVolumeMute : faVolumeUp} />
+          </button>
         </div>
       </div>
     </div>
@@ -51,6 +118,12 @@ function First_sec() {
 }
 
 function Home_about() {
+  const navigate = useNavigate();
+
+  const HandleClick = () => {
+    navigate("/about");
+  };
+
   return (
     <div className="global-sec">
       <div className="container">
@@ -69,7 +142,9 @@ function Home_about() {
               </p>
             </div>
           </div>
-          <span className="prime-btn">Explore</span>
+          <Link className="linker" to="/about">
+            <span className="prime-btn">Explore</span>
+          </Link>
         </div>
         <div className="home-about-images ">
           <div className="home-about-image">
@@ -88,6 +163,7 @@ function Home_about() {
 }
 
 function Home_Academic() {
+
   return (
     <div className="global-sec">
       <div className="container">
@@ -107,14 +183,16 @@ function Home_Academic() {
               </p>
             </div>
           </div>
-          <span className="prime-btn">Explore</span>
+          <Link className="linker" to="/academics">
+            <span className="prime-btn">Explore</span>
+          </Link>
         </div>
         <div className="home-about-images ">
           <div className="home-about-image">
-            <img src={home_about01} alt="image" className="img-fluid" />
+            <img src={pic1} alt="image" className="img-fluid" />
           </div>
           <div className="home-about-image">
-            <img src={home_about02} alt="image" className="img-fluid" />
+            <img src={pic2} alt="image" className="img-fluid" />
           </div>
         </div>
       </div>
@@ -128,9 +206,11 @@ function Home_Music_Room() {
       <div className="container">
         <div className="home-about-content">
           <h2>Khawaja Mashooqullah Music Room</h2>
+          <Link className="linker" to='/music-room'>
           <span className="prime-btn" style={{ marginTop: "1.5rem" }}>
             Explore
           </span>
+          </Link>
         </div>
         <div className="home-about-images ">
           <div className="home-about-image">
@@ -149,6 +229,8 @@ function Home_Music_Room() {
 }
 
 function Home_events() {
+  const navigate = useNavigate();
+
   const settings = {
     dots: true,
     infinite: true,
@@ -194,13 +276,72 @@ function Home_events() {
               </p>
             </div>
           </div>
-          <span className="prime-btn">Explore</span>
+          <Link className="linker" to="/events">
+            <span className="prime-btn">Explore</span>
+          </Link>
         </div>
         <div className="card-slider">
           <Slider {...settings}>
-            <span className="home-event-pic"><img src={sl1} alt="image" className="img-fluid card" /></span>
-            <span className="home-event-pic"><img src={sl2} alt="image" className="img-fluid card" /></span>
-            <span className="home-event-pic"><img src={sl3} alt="image" className="img-fluid card" /></span>  
+            <span className="home-event-pic">
+              <div class="parent-teacher-pic">
+                <div class="child-teacher-pic">
+                  <div class="ustaad-pic">
+                    <img
+                      src={sl1}
+                      alt="Ustaad Shahid Hamid"
+                      class="image-fluid"
+                    />
+                  </div>
+                  <div class="overlay">
+                    <h5>Ustaad Shahid Hamid.</h5>
+                    <p>
+                      Visiting Associate Professor of Practice, Comparative
+                      Humanities
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </span>
+            <span className="home-event-pic">
+              <div class="parent-teacher-pic">
+                <div class="child-teacher-pic">
+                  <div class="ustaad-pic">
+                    <img
+                      src={sl2}
+                      alt="Ustaad Shahid Hamid"
+                      class="image-fluid"
+                    />
+                  </div>
+                  <div class="overlay">
+                    <h5>Ustaad Shahid Hamid.</h5>
+                    <p>
+                      Visiting Associate Professor of Practice, Comparative
+                      Humanities
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </span>
+            <span className="home-event-pic">
+              <div class="parent-teacher-pic">
+                <div class="child-teacher-pic">
+                  <div class="ustaad-pic">
+                    <img
+                      src={sl3}
+                      alt="Ustaad Shahid Hamid"
+                      class="image-fluid"
+                    />
+                  </div>
+                  <div class="overlay">
+                    <h5>Ustaad Shahid Hamid.</h5>
+                    <p>
+                      Visiting Associate Professor of Practice, Comparative
+                      Humanities
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </span>
           </Slider>
         </div>
       </div>

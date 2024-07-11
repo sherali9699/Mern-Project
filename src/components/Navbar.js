@@ -1,77 +1,73 @@
-import React from "react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Mainlogo from '../images/home/logo.png';
 
-function Navbar() {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <header className="header">
-      <div className="container">
-        <nav className="navbar navbar-expand-lg">
-          <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            <img src="../images/home/logo.png" alt="logo" class="image-fluid" />
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNav"
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              {/* <span class="navbar-toggler-icon"></span> */}
-              <i className="fas fa-stream navbar-toggler-icon" />
-            </button>
-            <div
-              className="collapse navbar-collapse justify-content-end"
-              id="navbarNav"
-            >
-              <ul className="navbar-nav ms-auto menu-navbar-nav">
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    aria-current="page"
-                    href="#home"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#about">
-                    About Us
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#menu">
-                    Academic Offerings
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#offer">
-                    Music Room
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#review">
-                    Events
-                  </a>
-                </li>
-                <li className="nav-item mt-3 mt-lg-0">
-                  <a className="nav-link" href="#">
-                    Students Work
-                  </a>
-                </li>
-                <li className="nav-item mt-3 mt-lg-0">
-                  <a className="nav-link" href="#">
-                    Contact Us
-                  </a>
-                </li>
-              </ul>
+    <header>
+      <div className="main-header">
+        <div className="container">
+          <div 
+            className={`menu-Bar ${isOpen ? 'open' : ''}`} 
+            onClick={toggleMenu} 
+            role="button" 
+            aria-label="Toggle menu" 
+            aria-expanded={isOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div className="row">
+            <div className="col-md-2 position-relative">
+              <Link to="/" className="logo logobefore">
+                <img src={Mainlogo} alt="Main Logo" />
+              </Link>
+            </div>
+            <div className="col-md-10 text-right">
+              <div className={`menuWrap ${isOpen ? 'open' : ''}`}>
+                <ul className="menu">
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/">Home</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/about">About Us</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/academics">Academic Offerings</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/music-room">Music Room</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/events">Events</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/students-work">Students Work</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link text-white" to="/contact-us">Contact Us</Link>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </nav>
+        </div>
       </div>
+      <div 
+        className={`overlay ${isOpen ? 'active' : ''}`} 
+        onClick={toggleMenu} 
+        role="button" 
+        aria-label="Close menu"
+      ></div>
     </header>
   );
-}
+};
 
 export default Navbar;
